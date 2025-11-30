@@ -191,6 +191,7 @@ start.addEventListener('click',()=>{
     timeIntervalID = setInterval(()=>{
     sec++;
     if(sec>59){
+        sec=0;
         min++;
     }
     minElement.innerHTML = min;

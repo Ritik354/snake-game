@@ -9,7 +9,16 @@ const highScoreElement = document.querySelector('#high-score');
 const scoreElement = document.querySelector('#score');
 const minElement = document.querySelector('#min');
 const secElement = document.querySelector('#sec');
-/* size of block */
+
+// sound 
+
+const foodSound = new Audio('./music/food.mp3');
+const gameoverSound = new Audio('./music/gameover.mp3');
+const moveSound = new Audio('./music/move.mp3');
+const music = new Audio('./music/music.mp3');
+
+
+music.volume = .3;
 const blockHeight = 50
 const blockWidth = 50
 
@@ -80,6 +89,9 @@ function render(){
 //end game function
 
 const endGame = ()=>{
+        music.pause();
+        music.currentTime = 0;
+        gameoverSound.play();
         clearInterval(intervalID);
         clearInterval(timeIntervalID);
         for (let i = 0; i < rows; i++) {
@@ -131,6 +143,8 @@ function move(){
 
     //eat food
     if(food.x == head.x && food.y == head.y ){
+        foodSound.currentTime = 0; // reset
+        foodSound.play();         // play once  
         blocks[`${food.x}-${food.y}`].classList.remove('food');
         food = {x:Math.floor(Math.random()*rows),y:Math.floor( Math.random()*cols)};
         //update score
@@ -159,12 +173,13 @@ function move(){
     
     snake.unshift(head);
     snake.pop();
-    render();
+    render();       
 }
 
 
 //startButton
 start.addEventListener('click',()=>{
+    music.play();
     intervalID=setInterval(()=>{
         move();
         },300);
@@ -184,6 +199,7 @@ start.addEventListener('click',()=>{
     })
 //restart game
 restart.addEventListener('click',()=>{
+    music.play();
     for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
         blocks[`${i}-${j}`].classList.remove('fill');
@@ -214,23 +230,32 @@ restart.addEventListener('click',()=>{
 
 // key move code
 addEventListener("keydown",(event)=>{
+    let played = false;
     if(event.key=='ArrowUp'){
         if(direction!='down'){
             direction = 'up';
+            played= true;
         }
         
     }else if(event.key == 'ArrowDown'){
         if(direction!='up'){
             direction = 'down';
+            played= true;
         }
     }else if(event.key == 'ArrowRight'){
         if(direction!='left'){
             direction = 'right';
+            played= true;
         }
     }else if(event.key == 'ArrowLeft'){
         if(direction!='right'){
             direction = 'left';
+            played= true;
         }
+    }
+    if(played){
+        moveSound.currentTime = 0;   // reset audio = no delay
+        moveSound.play();
     }
 })
 

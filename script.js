@@ -9,6 +9,10 @@ const highScoreElement = document.querySelector('#high-score');
 const scoreElement = document.querySelector('#score');
 const minElement = document.querySelector('#min');
 const secElement = document.querySelector('#sec');
+const button = document.querySelector('.btn');
+const mute = document.querySelector('.mute');
+
+
 
 // sound 
 
@@ -17,8 +21,19 @@ const gameoverSound = new Audio('./music/gameover.mp3');
 const moveSound = new Audio('./music/move.mp3');
 const music = new Audio('./music/music.mp3');
 
-
+//mute audio
 music.volume = .3;
+mute.addEventListener('click',()=>{
+    if(music.volume){
+        music.volume = 0;
+        mute.setAttribute('src','./images/mute.png');
+    }else{
+        music.volume = .3;
+        mute.setAttribute('src','./images/volume.png');
+
+    }
+})
+
 const blockHeight = 50
 const blockWidth = 50
 
@@ -232,6 +247,8 @@ restart.addEventListener('click',()=>{
 // key move code
 addEventListener("keydown",(event)=>{
     let played = false;
+    
+
     if(event.key=='ArrowUp'){
         if(direction!='down'){
             direction = 'up';
@@ -259,4 +276,6 @@ addEventListener("keydown",(event)=>{
         moveSound.play();
     }
 })
+
+
 

@@ -59,6 +59,11 @@ section{
   justify-content: space-around;
   align-items: center;
 }
+.infos h3 img{
+  width: 20px;
+  height: 20px;
+  padding-top: 3px;
+}
 .info {
   padding: var(--space-sm) var(--space-md);
   border: 2px solid var(--border-primary-color);
